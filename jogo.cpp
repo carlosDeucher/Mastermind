@@ -20,7 +20,7 @@ int main() {
     do
     {
         //solicita ao usuario a variavel option que definira em qual case do switch entraremos.
-        cout<<"\033c";
+        
         cout<< "+==============================+" <<endl;
         cout<< "|         MENU PRINCIPAL       |" <<endl;
         cout<< "+==============================+" <<endl;
@@ -30,6 +30,8 @@ int main() {
         cout<< "+==============================+" <<endl;
         cout<< "        Escolha uma opção: ";
         cin>>option;
+        
+        cout<<"\033c";
         
         
         switch (option){ //Menu do jogo
@@ -49,14 +51,14 @@ int main() {
                     /*define a quantidade de numeros certos na posicao certa e numeros certos na posicao errada para 0. essas
                     variaveis serao usadas como contadores dentro desse loop a cada tentativa*/
 
-                    cout<<"\033c";
                     
-                    cout << "|          SENHA: " << DIG1 << DIG2 << DIG3 << DIG4 << "         |" << endl;
+                    
+                    cout <<endl<< "|          SENHA: " << DIG1 << DIG2 << DIG3 << DIG4 << "         |" << endl;
                     
                     cout << "+==============================+" << endl;
                     cout << "|   TENTATIVAS RESTANTES: ";
                     if (tent < 10) cout << " ";
-                    cout << tent << "    |" << endl;
+                    cout << tent << "   |" << endl;
                     cout<< "+==============================+" <<endl;
                     cout<< "|          SENHA: ****         |" <<endl;
                     cout<< "|Corretos na posição errada: "<<pos_err<<" |" <<endl;
@@ -64,6 +66,8 @@ int main() {
                     cout<< "+==============================+" <<endl;
                     cout<< "Digite um código (4 dígitos): ";
                     cin>>cod_tent;
+                    
+                    
                         
                     /* Separa o número de 4 dígitos digitado pelo jogador em dígitos individuais e joga dentro do vetor senha_dig.
                     A operação é feita do último para o primeiro dígito usando módulo e divisão:*/
@@ -76,29 +80,43 @@ int main() {
                             cod_tent /= 10;
                                 senha_usr[0] = cod_tent % 10;
                                 cod_tent /= 10;
+                                
+                    if (senha_usr[0] != senha_usr[1] && senha_usr[0] != senha_usr[2] && senha_usr[0] != senha_usr[3] && senha_usr[1] != senha_usr[2] && senha_usr[1] != senha_usr[3] && senha_usr[2] != senha_usr[3] || ){
                         
-                        // Caso onde o jogador acertou todas os digitos
-                    if (senha_usr[0] == DIG1 && senha_usr[1] == DIG2 && senha_usr[2] == DIG3 && senha_usr[3] == DIG4){ 
-                        option = 4;
-                    }else{
-
-                        //Outros casos
-                        pos_err = 0;
-                        pos_cer = 0;
-                        for (int i = 0; i<TAM; i++){
-                            if (senha_usr[i] == senha[i]) {
-                                pos_cer++;}
-                            for (int f = 0; f<TAM; f++){
-                                if(senha_usr[i] == senha[f] && i != f){
-                                    pos_err++;
-                                    }
+                            // Caso onde o jogador acertou todas os digitos
+                        if (senha_usr[0] == DIG1 && senha_usr[1] == DIG2 && senha_usr[2] == DIG3 && senha_usr[3] == DIG4){ 
+                            option = 4;
+                        
+                            
+                        }else{
+                            //Outros casos
+                            pos_err = 0;
+                            pos_cer = 0;
+                            for (int i = 0; i<TAM; i++){
+                                if (senha_usr[i] == senha[i]) {
+                                    pos_cer++;}
+                                for (int f = 0; f<TAM; f++){
+                                    if(senha_usr[i] == senha[f] && i != f){
+                                        pos_err++;
+                                        }
+                                }
                             }
+                            tent--;
+                            cout<<"\033c";
+                        }    
+                    }else{
+                        cout<<"\033c";
+                        cout<<endl<<"Você digitou uma senha inválida! Verifique as seguintes regras: ";
+                        cout<<endl<<"   - Os números precisam ser diferentes entre sí.";
+                        cout<<endl<<"   - Os números precisam estar entre 1 e 6."<<endl;
                         }
-                        tent--;
-                    }
+                        
+                    }while (option != 4 && tent > 0);
+                        
+                        
                       
 
-            } while (option != 4 && tent > 0);
+                
 
                 break;
 
@@ -119,6 +137,8 @@ int main() {
                 cout<< "+==============================+" <<endl;
                 cout<< "    Escolha uma opção: ";
                 cin>> option;
+                
+                cout<<"\033c";
         
                 break;
             

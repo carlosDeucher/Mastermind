@@ -81,7 +81,17 @@ int main() {
                                 senha_usr[0] = cod_tent % 10;
                                 cod_tent /= 10;
                                 
-                    if (senha_usr[0] != senha_usr[1] && senha_usr[0] != senha_usr[2] && senha_usr[0] != senha_usr[3] && senha_usr[1] != senha_usr[2] && senha_usr[1] != senha_usr[3] && senha_usr[2] != senha_usr[3] || ){
+                    if (senha_usr[0] == senha_usr[1] || senha_usr[0] == senha_usr[2] || senha_usr[0] == senha_usr[3] || senha_usr[1] == senha_usr[2] || senha_usr[1] == senha_usr[3] || senha_usr[2] == senha_usr[3]){
+                        cout<<"\033c";
+                        cout<<endl<<"Você digitou uma senha invalida! ";
+                        cout<<endl<<"- Os números precisam ser diferentes entre sí.";
+                        
+                    }else if(senha_usr[0] < 1 || senha_usr[0] > 6 || senha_usr[1] < 1 || senha_usr[1] > 6 || senha_usr[2] < 1 || senha_usr[2] > 6 || senha_usr[3] < 1 || senha_usr[3] > 6 ){
+                        cout<<"\033c";
+                        cout<<endl<<"Você digitou uma senha invalida! Verifique as seguintes regras: ";
+                        cout<<endl<<"- Os números precisam estar entre 1 e 6."<<endl;
+                        
+                    }else
                         
                             // Caso onde o jogador acertou todas os digitos
                         if (senha_usr[0] == DIG1 && senha_usr[1] == DIG2 && senha_usr[2] == DIG3 && senha_usr[3] == DIG4){ 
@@ -103,13 +113,10 @@ int main() {
                             }
                             tent--;
                             cout<<"\033c";
-                        }    
-                    }else{
-                        cout<<"\033c";
-                        cout<<endl<<"Você digitou uma senha inválida! Verifique as seguintes regras: ";
-                        cout<<endl<<"   - Os números precisam ser diferentes entre sí.";
-                        cout<<endl<<"   - Os números precisam estar entre 1 e 6."<<endl;
                         }
+                        
+                    
+                    
                         
                     }while (option != 4 && tent > 0);
                         

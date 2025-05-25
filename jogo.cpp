@@ -6,20 +6,14 @@ using namespace std;
 
 #define DEV_MODE false
 
-#define TAM 4
-#define DIG1 senha[0]
-#define DIG2 senha[1]
-#define DIG3 senha[2]
-#define DIG4 senha[3]
-
 int main() {
 	srand(time(NULL));
 
-	int option, senha[TAM], senha_usr[TAM], tent = 10, pos_err = 0, pos_cer = 0,
-	                                        cod_tent = 0;
+	int option, senha_dig_1, senha_dig_2, senha_dig_3, senha_dig_4, senha_usr_1, senha_usr_2, senha_usr_3, senha_usr_4, tent = 10, pos_err = 0, pos_cer = 0, cod_tent = 0;
 	bool continuar = true;
 
 	do {
+	    option = 0;
 		// solicita ao usuario a variavel option que definira em qual case do switch
 		// entraremos.
 		cout << "+==============================+" << endl;
@@ -46,11 +40,12 @@ int main() {
 			/*Algoritimo para gerar os digitos aleatorios da senha e verificar se
 			 * todos os digitos da senha sao diferentes*/
 			do {
-				for (int i = 0; i < 4; i++) {
-					senha[i] = (rand() % 6) + 1;
-				}
-			} while (DIG1 == DIG2 || DIG1 == DIG3 || DIG1 == DIG4 || DIG2 == DIG3 ||
-			         DIG2 == DIG4 || DIG3 == DIG4);
+				senha_dig_1 = (rand() % 6) + 1;
+				senha_dig_2 = (rand() % 6) + 1;
+				senha_dig_3 = (rand() % 6) + 1;
+				senha_dig_4 = (rand() % 6) + 1;
+			} while (senha_dig_1 == senha_dig_2 || senha_dig_1 == senha_dig_3 || senha_dig_1 == senha_dig_4 || senha_dig_2 == senha_dig_3 ||
+			         senha_dig_2 == senha_dig_4 || senha_dig_3 == senha_dig_4);
 
 			do {  // LOOP DA TENTATIVA
 
@@ -60,7 +55,7 @@ int main() {
 
 				if(DEV_MODE) {
 					cout << endl
-					     << "|          SENHA: " << DIG1 << DIG2 << DIG3 << DIG4
+					     << "|[DEBUG] SENHA GERADA: " << senha_dig_1 << senha_dig_2 << senha_dig_3 << senha_dig_4
 					     << "         |" << endl;
 				}
 
@@ -79,80 +74,80 @@ int main() {
 				/* Separa o número de 4 dígitos digitado pelo jogador em dígitos
 				individuais e joga dentro do vetor senha_dig. A operação é feita do
 				último para o primeiro dígito usando módulo e divisão:*/
+				
+				if (cod_tent < 1000 || cod_tent > 9999) {
+					cout << "\033c";
+					cout << endl << "Você digitou uma senha inválida! " << endl;
+					cout << endl << "- O número precisa ter 4 dígitos." << endl;
+					continue;
+				}
 
-				senha_usr[3] =
-				    cod_tent % 10;  // - `cod_tent % 10` obtém o último dígito
-				cod_tent /=
-				    10;  // - `cod_tent /= 10` remove o último dígito já extraído
-				senha_usr[2] = cod_tent % 10;
+				senha_usr_4 = cod_tent % 10;  // - `cod_tent % 10` obtém o último dígito
+				cod_tent /= 10;  // - `cod_tent /= 10` remove o último dígito já extraído
+				senha_usr_3 = cod_tent % 10;
 				cod_tent /= 10;
-				senha_usr[1] = cod_tent % 10;
+				senha_usr_2 = cod_tent % 10;
 				cod_tent /= 10;
-				senha_usr[0] = cod_tent % 10;
+				senha_usr_1 = cod_tent % 10;
 				cod_tent /= 10;
 
-				if (senha_usr[0] == senha_usr[1] || senha_usr[0] == senha_usr[2] ||
-				        senha_usr[0] == senha_usr[3] || senha_usr[1] == senha_usr[2] ||
-				        senha_usr[1] == senha_usr[3] || senha_usr[2] == senha_usr[3]) {
+				if (senha_usr_1 == senha_usr_2 || senha_usr_1 == senha_usr_3 ||
+				        senha_usr_1 == senha_usr_4 || senha_usr_2 == senha_usr_3 ||
+				        senha_usr_2 == senha_usr_4 || senha_usr_3 == senha_usr_4) {
 					cout << "\033c";
 					cout << endl << "Você digitou uma senha inválida! ";
 					cout << endl << "- Os números precisam ser diferentes entre si." << endl;
 
-				} else if (senha_usr[0] < 1 || senha_usr[0] > 6 || senha_usr[1] < 1 ||
-				           senha_usr[1] > 6 || senha_usr[2] < 1 || senha_usr[2] > 6 ||
-				           senha_usr[3] < 1 || senha_usr[3] > 6) {
+				} else if (senha_usr_1 < 1 || senha_usr_1 > 6 || senha_usr_2 < 1 ||
+				           senha_usr_2 > 6 || senha_usr_3 < 1 || senha_usr_3 > 6 ||
+				           senha_usr_4 < 1 || senha_usr_4 > 6) {
 					cout << "\033c";
 					cout << endl
 					     << "Você digitou uma senha inválida! Verifique as seguintes regras: ";
 					cout << endl << "- Os números precisam estar entre 1 e 6." << endl;
 
-				} else
+				} else {
+					pos_err = 0;
+					pos_cer = 0;
 
-					// Caso onde o jogador acertou todas os digitos
-					if (senha_usr[0] == DIG1 && senha_usr[1] == DIG2 &&
-					        senha_usr[2] == DIG3 && senha_usr[3] == DIG4) {
+					if (senha_usr_1 == senha_dig_1) pos_cer++;
+					if (senha_usr_2 == senha_dig_2) pos_cer++;
+					if (senha_usr_3 == senha_dig_3) pos_cer++;
+					if (senha_usr_4 == senha_dig_4) pos_cer++;
 
-						cout << "\033c";
-						cout << endl << "Parabéns! Você acertou todos os números!" << endl;
-						cout << endl << "Você venceu!" << endl;
-						cout << endl << "1 - Retornar ao Menu Principal" << endl;
-						cin >> option;
-						cout << "\033c";
-						option = 4;
-					} else {
-						// Outros casos
-						pos_err = 0;
-						pos_cer = 0;
+					if (senha_usr_1 == senha_dig_2 || senha_usr_1 == senha_dig_3 || senha_usr_1 == senha_dig_4) pos_err++;
+					if (senha_usr_2 == senha_dig_1 || senha_usr_2 == senha_dig_3 || senha_usr_2 == senha_dig_4) pos_err++;
+					if (senha_usr_3 == senha_dig_1 || senha_usr_3 == senha_dig_2 || senha_usr_3 == senha_dig_4) pos_err++;
+					if (senha_usr_4 == senha_dig_1 || senha_usr_4 == senha_dig_2 || senha_usr_4 == senha_dig_3) pos_err++;
 
-						// Itera sob cada elemento da senha
-						for (int i = 0; i < TAM; i++) {
-							// Checa se o caracter está correto (Mesma posição)
-							if (senha_usr[i] == senha[i]) {
-								pos_cer++;
-							}
-
-							// Checa se o caracter está correto (Posição errada)
-							for (int f = 0; f < TAM; f++) {
-								if (senha_usr[i] == senha[f] && i != f) {
-									pos_err++;
-								}
-							}
-						}
-
-						if (tent == 1) {
-							cout << "\033c";
-							cout << endl
-							     << "Que pena, suas tentativas acabaram! Você perdeu! "
-							     << endl
-							     << endl;
-							cout << "1 - Retornar ao Menu Principal" << endl;
-							cin >> option;
-						}
-
+					if (senha_usr_1 != senha_dig_1 || senha_usr_2 != senha_dig_2 ||
+						senha_usr_3 != senha_dig_3 || senha_usr_4 != senha_dig_4) {
 						tent--;
-						cout << "\033c";
 					}
-			} while (option != 4 && tent > 0);
+					cout << "\033c";
+				}
+			} while ((senha_usr_1 != senha_dig_1 || senha_usr_2 != senha_dig_2 ||
+				senha_usr_3 != senha_dig_3 || senha_usr_4 != senha_dig_4) && tent > 0);
+
+				if (tent == 0) {
+					cout << "\033c";
+					cout << endl
+					     << "Que pena, suas tentativas acabaram! Você perdeu! "
+					     << endl
+					     << endl;
+					cin.ignore();
+					cout << "Aperte ENTER para voltar ao Menu Principal...";
+					cin.ignore();
+					cout << "\033c";
+				} else {
+					cout << "\033c";
+					cout << endl << "Parabéns! Você acertou todos os números!" << endl;
+					cout << endl << "Você venceu!" << endl;
+					cin.ignore();
+					cout << "Aperte ENTER para voltar ao Menu Principal...";
+					cin.ignore();
+					cout << "\033c";
+				}
 			break;
 
 		case 2: /*Sobre*/
@@ -168,19 +163,15 @@ int main() {
 			cout << "| - Luiz Borba                 |" << endl;
 			cout << "| - Carlos Henrique Deucher    |" << endl;
 			cout << "|                              |" << endl;
-			cout << "|   (4) Retornar ao Menu       |" << endl;
 			cout << "+==============================+" << endl;
-			cout << "    Escolha uma opção: ";
-			cin >> option;
-
+			cin.ignore();
+			cout << "Aperte ENTER para voltar ao Menu Principal...";
+			cin.ignore();
 			cout << "\033c";
 
 			break;
 		case 3: /*Sair*/
 			continuar = false;
-			break;
-		case 4:
-			tent = 10;
 			break;
 		}
 

@@ -49,7 +49,7 @@ int main() {
 
 			do {  // LOOP DA TENTATIVA
 
-				/*define a quantidade de números certos na posição certa e números
+				/*Exibe a quantidade de números certos na posição certa e números
 				certos na posição errada para 0. essas variáveis serão usadas como
 				contadores dentro desse loop a cada tentativa*/
 
@@ -71,16 +71,17 @@ int main() {
 				cout << "Digite um código (4 dígitos): ";
 				cin >> cod_tent;
 				
-				/* Separa o número de 4 dígitos digitado pelo jogador em dígitos
-				individuais e joga dentro do vetor senha_dig. A operação é feita do
-				último para o primeiro dígito usando módulo e divisão:*/
-				
+				/*Verifica se o número digitado pelo jogador tem 4 dígitos*/
 				if (cod_tent < 1000 || cod_tent > 9999) {
 					cout << "\033c";
 					cout << endl << "Você digitou uma senha inválida! " << endl;
 					cout << endl << "- O número precisa ter 4 dígitos." << endl;
 					continue;
 				}
+
+				/* Separa o número de 4 dígitos digitado pelo jogador em dígitos
+				individuais e joga dentro do vetor senha_dig. A operação é feita do
+				último para o primeiro dígito usando módulo e divisão:*/
 
 				senha_usr_4 = cod_tent % 10;  // - `cod_tent % 10` obtém o último dígito
 				cod_tent /= 10;  // - `cod_tent /= 10` remove o último dígito já extraído

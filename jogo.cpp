@@ -92,6 +92,7 @@ int main() {
 				senha_usr_1 = cod_tent % 10;
 				cod_tent /= 10;
 
+				// confere se os digitos são diferentes entre eles
 				if (senha_usr_1 == senha_usr_2 || senha_usr_1 == senha_usr_3 ||
 				        senha_usr_1 == senha_usr_4 || senha_usr_2 == senha_usr_3 ||
 				        senha_usr_2 == senha_usr_4 || senha_usr_3 == senha_usr_4) {
@@ -100,7 +101,7 @@ int main() {
 					cout << endl << "- Os números precisam ser diferentes entre si." << endl;
 
 				} else if (senha_usr_1 < 1 || senha_usr_1 > 6 || senha_usr_2 < 1 ||
-				           senha_usr_2 > 6 || senha_usr_3 < 1 || senha_usr_3 > 6 ||
+				           senha_usr_2 > 6 || senha_usr_3 < 1 || senha_usr_3 > 6 || // delimita o valor minimo (1) e máximo (6)
 				           senha_usr_4 < 1 || senha_usr_4 > 6) {
 					cout << "\033c";
 					cout << endl
@@ -111,17 +112,20 @@ int main() {
 					pos_err = 0;
 					pos_cer = 0;
 
+					//se o usuario acertar o digito da senha na posição certa o contador de posição certa soma +1
 					if (senha_usr_1 == senha_dig_1) pos_cer++;
 					if (senha_usr_2 == senha_dig_2) pos_cer++;
-					if (senha_usr_3 == senha_dig_3) pos_cer++;
+					if (senha_usr_3 == senha_dig_3) pos_cer++; 
 					if (senha_usr_4 == senha_dig_4) pos_cer++;
 
+					//se o usuario acertar a digito da senha na posição errada o contador de posição errada soma +1
 					if (senha_usr_1 == senha_dig_2 || senha_usr_1 == senha_dig_3 || senha_usr_1 == senha_dig_4) pos_err++;
-					if (senha_usr_2 == senha_dig_1 || senha_usr_2 == senha_dig_3 || senha_usr_2 == senha_dig_4) pos_err++;
-					if (senha_usr_3 == senha_dig_1 || senha_usr_3 == senha_dig_2 || senha_usr_3 == senha_dig_4) pos_err++;
+					if (senha_usr_2 == senha_dig_1 || senha_usr_2 == senha_dig_3 || senha_usr_2 == senha_dig_4) pos_err++; 
+					if (senha_usr_3 == senha_dig_1 || senha_usr_3 == senha_dig_2 || senha_usr_3 == senha_dig_4) pos_err++; 
 					if (senha_usr_4 == senha_dig_1 || senha_usr_4 == senha_dig_2 || senha_usr_4 == senha_dig_3) pos_err++;
 
-					if (senha_usr_1 != senha_dig_1 || senha_usr_2 != senha_dig_2 ||
+					// se o usuario erra a senha a tentativa diminui para ele tentar novamente até acabarem
+					if (senha_usr_1 != senha_dig_1 || senha_usr_2 != senha_dig_2 || 
 						senha_usr_3 != senha_dig_3 || senha_usr_4 != senha_dig_4) {
 						tent--;
 					}
@@ -129,13 +133,14 @@ int main() {
 				}
 			} while ((senha_usr_1 != senha_dig_1 || senha_usr_2 != senha_dig_2 ||
 				senha_usr_3 != senha_dig_3 || senha_usr_4 != senha_dig_4) && tent > 0);
+				 // Executa o while até que o usuario acerte todos os digitos ou as tentativas acabem
 
 				if (tent == 0) {
 					cout << "\033c";
 					cout << endl
 					     << "Que pena, suas tentativas acabaram! Você perdeu! "
 					     << endl
-					     << endl;
+					     << endl;   
 					cin.ignore();
 					cout << "Aperte ENTER para voltar ao Menu Principal...";
 					cin.ignore();
@@ -160,7 +165,7 @@ int main() {
 			cout << "+==============================+" << endl;
 			cout << "|       Desenvolvedores:       |" << endl;
 			cout << "| - Matheus Alexandre Santos   |" << endl;
-			cout << "| - Luiz Miguel Silvino        |" << endl;
+			cout << "| - Luiz Miguel Silvino        |" << endl;  
 			cout << "| - Luiz Borba                 |" << endl;
 			cout << "| - Carlos Henrique Deucher    |" << endl;
 			cout << "|                              |" << endl;
@@ -172,7 +177,7 @@ int main() {
 
 			break;
 		case 3: /*Sair*/
-			continuar = false;
+			continuar = false; 
 			break;
 		}
 
